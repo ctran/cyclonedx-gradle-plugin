@@ -295,13 +295,9 @@ class SbomBuilder<T extends BaseCyclonedxTask> {
             try {
                 List<String> configuredAlgorithms = task.getHashAlgorithms().get();
                 if (!configuredAlgorithms.isEmpty()) {
-                    LOGGER.debug(
-                            "{} Calculating hashes for algorithms: {}",
-                            LOG_PREFIX,
-                            configuredAlgorithms);
-                    // Convert string algorithm names to Hash.Algorithm enum values
+                    LOGGER.debug("{} Calculating hashes for algorithms: {}", LOG_PREFIX, configuredAlgorithms);
                     List<Hash.Algorithm> algorithms = configuredAlgorithms.stream()
-                            .map(Hash.Algorithm::valueOf)
+                            .map(Hash.Algorithm::fromSpec)
                             .collect(Collectors.toList());
                     return BomUtils.calculateHashes(f, version, algorithms);
                 }
